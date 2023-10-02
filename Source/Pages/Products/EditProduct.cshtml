@@ -1,0 +1,74 @@
+﻿@page
+@model ProductOrders.Pages.Products.EditProductModel
+@{
+}
+
+<br />
+<h2>Edit Product</h2>
+
+@if (Model.captureErrorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+        <strong>@Model.captureErrorMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+
+
+@*USE POST METHOD TO USE INPUT DATA THAT WILL BE ADDED TO THE DB*@
+<form method="POST">
+    @*Current product identifier*@
+    <input type="hidden" name="PrimaryKeyCurrentProduct" value="@Model.productInfInstance.PrimaryKeyId">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Product Name</label>
+        @*col-sm-6 represents the width of the fields*@
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="Name" value="@Model.productInfInstance.ProductName">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Sku Reference</label>
+        @*col-sm-6 represents the width of the fields*@
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="SkuReference" value="@Model.productInfInstance.SkuReference">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Cost Center Id</label>
+        @*col-sm-6 represents the width of the fields*@
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="CostCenterId" value="@Model.productInfInstance.CostCenterId">
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Product Description</label>
+        @*col-sm-6 represents the width of the fields*@
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="ProductDescription" value="@Model.productInfInstance.ProductDescription">
+        </div>
+    </div>
+
+    @*Display success message bootstrap *@
+    @if (Model.captureSuccessMessage.Length > 0)
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class='alert alert-success alert-dismissible fade show' role='alert'>
+                    <strong>@Model.captureSuccessMessage</strong>
+                    <button type='button' class='btn-close btn-close-white' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Update Product Information</button>
+        </div>
+
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/Products/Main" role="button">Cancel</a>
+        </div>
+    </div>
+
+</form>

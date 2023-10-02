@@ -1,0 +1,43 @@
+﻿@page
+@*This means we are not going to use any controller*@
+@model ProductOrders.Pages.Products.MainModel
+@{
+}
+
+<br>
+<h2>Ordered Products Database</h2>
+@*Add button to create new product*@
+<a class='btn btn-primary btn-sm' href='/Products/AddProduct'>Add New Product</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Sku Reference</th>
+            <th>Cost Center ID</th>
+            <th>Description</th>
+            <th>Creation Time</th>
+            <th>Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*Use a loop to add data base records to table display, we use Model class to reference the data base list*@
+        @foreach(var productIndex in Model.ProductsList)
+        {
+            <tr>
+                <td>@productIndex.PrimaryKeyId</td>
+                <td>@productIndex.ProductName</td>
+                <td>@productIndex.SkuReference</td>
+                <td>@productIndex.CostCenterId</td>
+                <td>@productIndex.ProductDescription</td>
+                <td>@productIndex.CreationTime</td>
+                <td>
+                    @*Add these buttons to redirect to edit and delete pages for a specific product (ID)*@
+                    <a class="btn btn-primary btn-sm" href="/Products/EditProduct?ID=@productIndex.PrimaryKeyId">Edit Product</a>
+                    <a class="btn btn-danger btn-sm" href="/Products/DeleteRecord?ID=@productIndex.PrimaryKeyId">Delete Product</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

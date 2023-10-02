@@ -1,0 +1,45 @@
+﻿@*
+Add SQL client namespace*@
+@page
+@using System.Data.SqlClient;
+
+
+@{
+    //We can use this.Request.Query to obtain the collection of products
+    //Use Request.Query http inherited function to read the primary key of the current product
+    //Provide name of the paramater of the product id
+    //(URL that the DELETE button redirects to: href="/Products/EditProduct?   >>ID<<   =@productIndex.PrimaryKeyId" )
+    String id = Request.Query["id"]; //"id" value is inherited from the http request
+
+    try
+    {
+        //Declare connection string
+        String databaseConnection = "Data Source=.\\SQLEXPRESS;Initial Catalog=ProductOrdersDatabase;Integrated Security=True";
+
+        //Create SQL connection
+        using (SqlConnection connection = new SqlConnection(databaseConnection))
+        {
+            connection.Open();
+
+            //DELETE the product with the corresponding id
+            String DeleteSelectedProduct = "DELETE FROM products WHERE PrimaryKey=@PrimaryKeyId"; //Use @VariableName inside SQL query
+
+            //Crete SQL script command
+            using (SqlCommand mapProductIdDB = new SqlCommand(DeleteSelectedProduct, connection))
+            {
+                //Map the primary key value obtained fromthe  http request method
+                //Assign the value to @PrimaryKeyId (SQL variable) in the script that will be executed
+                mapProductIdDB.Parameters.AddWithValue("@PrimaryKeyId", id);
+
+                mapProductIdDB.ExecuteNonQuery();
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        
+    }
+
+    //Send the user to the list page
+    Response.Redirect("/Products/Main");
+}
